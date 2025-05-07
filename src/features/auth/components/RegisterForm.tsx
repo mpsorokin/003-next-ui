@@ -6,6 +6,16 @@ import { useForm } from 'react-hook-form'
 import { AuthWrapper } from '@/features/auth/components/AuthWrapper'
 import { RegisterSchema, TypeRegisterSchema } from '@/features/auth/schemes'
 
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+	Input
+} from '@/shared/components/ui'
+
 export function RegisterForm() {
 	const form = useForm<TypeRegisterSchema>({
 		resolver: zodResolver(RegisterSchema),
@@ -17,7 +27,7 @@ export function RegisterForm() {
 		}
 	})
 
-	const onSubmit = async (values: TypeRegisterSchema) => {
+	const onHandleSubmit = async (values: TypeRegisterSchema) => {
 		console.log(values)
 	}
 
@@ -28,7 +38,82 @@ export function RegisterForm() {
 			backButtonLabel='Already have an account?'
 			backButtonHref='/auth/login'
 		>
-			Reg
+			<Form {...form}>
+				<form
+					onSubmit={form.handleSubmit(onHandleSubmit)}
+					className='space-y-2'
+				>
+					<FormField
+						control={form.control}
+						name='name'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Name</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='John Doe'
+										{...field}
+									></Input>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					<FormField
+						control={form.control}
+						name='email'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Email</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='test@mail.com'
+										type='email'
+										{...field}
+									></Input>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='password'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Password</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='***'
+										type='password'
+										{...field}
+									></Input>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					<FormField
+						control={form.control}
+						name='passwordRepeat'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Password Repeat</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='***'
+										type='password'
+										{...field}
+									></Input>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				</form>
+			</Form>
 		</AuthWrapper>
 	)
 }
