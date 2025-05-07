@@ -7,6 +7,7 @@ import { AuthWrapper } from '@/features/auth/components/AuthWrapper'
 import { RegisterSchema, TypeRegisterSchema } from '@/features/auth/schemes'
 
 import {
+	Button,
 	Form,
 	FormControl,
 	FormField,
@@ -41,7 +42,7 @@ export function RegisterForm() {
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(onHandleSubmit)}
-					className='space-y-2'
+					className='grid gap-2 space-y-2'
 				>
 					<FormField
 						control={form.control}
@@ -112,6 +113,7 @@ export function RegisterForm() {
 							</FormItem>
 						)}
 					/>
+					<Button type='submit'>Create account</Button>
 				</form>
 			</Form>
 		</AuthWrapper>
