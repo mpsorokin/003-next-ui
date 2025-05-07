@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-	title: 'Create account',
+	title: 'Login',
 	description: ''
 }
 
-export default function RegisterPage() {
+export default function LoginPage() {
 	return <div></div>
 }
