@@ -5,19 +5,19 @@ import { api } from '@/shared/api/instance.api'
 
 class AuthService {
   async register(body: TypeRegisterSchema) {
-    const response = api.post<IUser>('auth/register', body)
+    const response = api.post<IUser>('/auth/register', body)
 
     return response
   }
 
   async login(body: TypeLoginSchema) {
-    const response = api.post<IUser>('auth/login', body)
+    const response = api.post<IUser>('/auth/login', body)
 
     return response
   }
 
   async logout() {
-    const response = await api.post('auth/logout')
+    const response = await api.post('/auth/logout')
 
     return response
   }
