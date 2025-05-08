@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 import { AuthWrapper } from '@/features/auth/components/AuthWrapper'
+import { useLoginMutation } from '@/features/auth/hooks/useLoginMutation'
 import { LoginSchema, TypeLoginSchema } from '@/features/auth/schemes'
 
 import {
@@ -21,14 +22,16 @@ export function LoginForm() {
   const form = useForm<TypeLoginSchema>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
-      name: '',
       email: '',
       password: ''
     }
   })
 
+  const { login, isLoadingLogin } = useLoginMutation()
+
   const onHandleSubmit = async (values: TypeLoginSchema) => {
     console.log(values)
+    login({ values })
   }
 
   return (
@@ -45,26 +48,13 @@ export function LoginForm() {
         >
           <FormField
             control={form.control}
-            name='name'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input placeholder='John Doe' {...field}></Input>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
             name='email'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
+                    disabled={isLoadingLogin}
                     placeholder='test@mail.com'
                     type='email'
                     {...field}
@@ -81,13 +71,20 @@ export function LoginForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder='***' type='password' {...field}></Input>
+                  <Input
+                    disabled={isLoadingLogin}
+                    placeholder='***'
+                    type='password'
+                    {...field}
+                  ></Input>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type='submit'>Log in</Button>
+          <Button disabled={isLoadingLogin} type='submit'>
+            Log in
+          </Button>
         </form>
       </Form>
     </AuthWrapper>
