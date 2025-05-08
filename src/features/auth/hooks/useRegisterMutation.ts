@@ -7,7 +7,7 @@ import { authService } from '@/features/auth/services/auth.service'
 import { toastMessageHandler } from '@/shared/utils/toast-message-handler'
 
 export function useRegisterMutation() {
-	const {} = useMutation({
+	const { mutate: register, isPending: isLoadingRegister } = useMutation({
 		mutationKey: ['register user'],
 		mutationFn: ({ values }: { values: TypeRegisterSchema }) =>
 			authService.register(values),
@@ -20,4 +20,6 @@ export function useRegisterMutation() {
 			toastMessageHandler(error)
 		}
 	})
+
+	return { register, isLoadingRegister }
 }

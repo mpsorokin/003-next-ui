@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 import { AuthWrapper } from '@/features/auth/components/AuthWrapper'
+import { useRegisterMutation } from '@/features/auth/hooks/useRegisterMutation'
 import { RegisterSchema, TypeRegisterSchema } from '@/features/auth/schemes'
 
 import {
@@ -29,8 +30,11 @@ export function RegisterForm() {
 		}
 	})
 
+	const { register, isLoadingRegister } = useRegisterMutation()
+
 	const onHandleSubmit = async (values: TypeRegisterSchema) => {
 		console.log(values)
+		register({ values })
 		toast.info('Register successfully.')
 	}
 
@@ -54,6 +58,7 @@ export function RegisterForm() {
 								<FormLabel>Name</FormLabel>
 								<FormControl>
 									<Input
+										disabled={isLoadingRegister}
 										placeholder='John Doe'
 										{...field}
 									></Input>
