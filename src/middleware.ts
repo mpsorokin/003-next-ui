@@ -10,9 +10,12 @@ export default function middleware(request: NextRequest) {
   if (isAuthPage) {
     if (session) {
       return NextResponse.redirect(new URL('/dashboard/settings', url))
-    } else {
-      return NextResponse.next()
     }
+    return NextResponse.next()
+  }
+
+  if (!session) {
+    return NextResponse.redirect(new URL('/auth/login', url))
   }
 }
 
